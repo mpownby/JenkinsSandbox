@@ -23,8 +23,9 @@ def call(Map config=[:]) {
         echo "changes";
     }
     
+    echo "Config contents:"
     for (element in config)
     {
-        echo ("${element.key} ${element.value}");
+        echo ("Key: ${element.key} Value: ${element.value}");
     }
 }
