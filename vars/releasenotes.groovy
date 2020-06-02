@@ -8,7 +8,7 @@ def call(Map config=[:]) {
     new File(dir.path + '/releasenotes.txt').withWriter('utf-8')
     {
         writer ->
-            dir.eachFileRecurse(fileType.ANY) { file ->
+            dir.eachFileRecurse(FileType.ANY) { file ->
                 if (file.isDirectory()) {
                     writer.writeLine(file.name);
                 }
