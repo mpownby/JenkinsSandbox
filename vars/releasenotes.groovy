@@ -2,6 +2,7 @@ import java.io.*;
 import groovy.io.*;
 import java.util.Calendar.*;
 import java.text.SimpleDateFormat;
+import hudson.model.*;
 
 @NonCPS
 def call(Map config=[:]) {
@@ -26,6 +27,21 @@ def call(Map config=[:]) {
     echo "Date and time is: " + sdf.format(date);
     
     echo "Build number is: ${BUILD_NUMBER}"
+    
+    def changeLogSets = currentBuild.changeSets;
+    
+    for (change in changeLogSets)
+    {
+        def entries = change.items;
+        for (entry in entries)
+        {
+            echo "${entry.commitId) by ${entry.author) on ${new Date(entry.timestamp)}: ${entry.msg}";
+            for (file in entry.affectedFiles) {
+                echo "   ${file.editType.name} ${file.path}";
+            }
+                                                            
+        }
+    }
     
     if (config.changes != "false") {
         echo "changes";
